@@ -19,8 +19,12 @@ fi
 #######################################
 ######### executar script #############
 #######################################
+# criar pasta de script 
+# mkdir -p ./scripts
+# Adcionar a regra da crontab para toda segunda-feira as 05:40
+# 40 5 * * 1      root    sh      /root/scripts/rsync-backup.sh
 
-#precisa instalar sshpass e rsync
+# precisa instalar sshpass e rsync
 # apt update -y && apt install sshpass rsync -y
 
 #comando para sincronizar diretorio de backup do proxmox com o diretorio remoto
