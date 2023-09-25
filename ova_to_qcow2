@@ -1,0 +1,64 @@
+Enviar arquivo via ssh
+
+scp .\Mkt.ova root@192.168.30.19:/tmp/
+
+acesso via ssh
+ssh root@192.168.30.19
+
+acesso a pasta temp
+cd /tmp
+
+tar xvf Mkt.ova
+
+Mikrotik 6.4.ovf
+Mikrotik 6.4-disk001.vmdk
+Mikrotik 6.4-disk002.vmdk
+Mikrotik 6.4.mf
+
+qm importovf 101 ./Mikrotik\ 6.4.ovf local-lvm --format qcow2
+qm importdisk 101 Mikrotik\ 6.4-disk001.vmdk local-lvm --format qcow2
+
+.....................................................................................................................................................................................
+
+pushd /tmp/
+tar xvf Routeros.ova
+
+KHOIRU IBADI R.ovf
+KHOIRU IBADI R-disk001.vmdk
+KHOIRU IBADI R-disk002.vmdk
+KHOIRU IBADI R.mf
+
+cd /tmp
+# tar xf Routeros.ova
+# qemu-img convert -f vmdk KHOIRU IBADI R-disk001.vmdk -O qcow2 KHOIRU IBADI R.qcow2
+-check Routeros.ova configuration
+# cat KHOIRU IBADI R.ovf | grep -e “Memory RAMSize” -e “CPU count” -e “Netw” -e “Disk”
+What I found only disk size and nic quantity. The rest should be default
+-create empty vm with 1 nic. Disk size could be any smallest size because I will overwrite later. Disk type could be vmdk or qcow2
+# cp KHOIRU IBADI R.qcow2 /var/lib/vz/images/100/vm-100-disk-1.qcow2
+-start the vm in proxmox
+
+
+qemu-img convert -f vmdk  /var/lib/vz/images/<VMID>/imagediskname.qcow2 -O vmdk /path/to/myNewImage.vmdk
+
+qm importovf  <path to ova> <destination storage pool name> [OPTIONS]
+qm importovf 300 ./Mikrotik\ 6.4.ovf 2GB --format qcow2
+
+
+-scp ova into /tmp. In my case I am using dsl-4-4-10.ova
+# cd /tmp
+Mikrotik 6.4.ovf
+Mikrotik 6.4-disk001.vmdk
+Mikrotik 6.4-disk002.vmdk
+Mikrotik 6.4.mf
+
+qm importovf 101 ./openppm.ovf proxthin --format qcow2
+
+# tar xf Mkt.ova
+# qemu-img convert -f vmdk Mikrotik 6.4-disk001.vmdk -O qcow2 Mikrotik 6.4.qcow2
+-check dsl-4-4-10.ova configuration
+# cat Mikrotik 6.4.ovf | grep -e “Memory RAMSize” -e “CPU count” -e “Netw” -e “Disk”
+What I found only disk size and nic quantity. The rest should be default
+-create empty vm with 1 nic. Disk size could be any smallest size because I will overwrite later. Disk type could be vmdk or qcow2
+# cp DSL-4.4.10.qcow2 /var/lib/vz/images/100/vm-100-disk-1.qcow2
+-start the vm in proxmox
